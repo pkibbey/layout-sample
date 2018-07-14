@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Strain from "./Strain"
-import "./App.css"
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-        data: [],
-        columns: 0
+      data: [],
+      columns: 0
     };
   }
 
@@ -30,28 +29,26 @@ class App extends Component {
   }
 
   updateDimensions = () => {
-    if (window.innerWidth < (180 * 1)) {
-      this.setState({ columns: 0 });
-    } else if (window.innerWidth < (180 * 2 + 10)) {
-      this.setState({ columns: 1 });
-    } else if (window.innerWidth < (180 * 3 + 20)) {
-      this.setState({ columns: 2 });
-    } else if (window.innerWidth < (180 * 4 + 30)) {
-      this.setState({ columns: 3 });
-    } else if (window.innerWidth < (180 * 5 + 40)) {
-      this.setState({ columns: 4 });
-    } else if (window.innerWidth < (180 * 6 + 50)) {
-      this.setState({ columns: 5 });
-    } else {
-      this.setState({ columns: 6 });
-    }
+    const w = window.innerWidth;
+
+    if (w < 180) { this.setColumns(0); }
+    else if (w < 370) { this.setColumns(1); }
+    else if (w < 560) { this.setColumns(2); }
+    else if (w < 750) { this.setColumns(3); }
+    else if (w < 940) { this.setColumns(4); }
+    else if (w < 1130) { this.setColumns(5); }
+    else { this.setColumns(6); }
+  }
+
+  setColumns(columns) {
+    this.setState({ columns });
   }
 
   render() {
     const { data, columns } = this.state;
 
     return (
-      <React.Fragment className="App">
+      <React.Fragment>
         {data.map((item, index) => <Strain item={item} key={index} noPaddding={columns - 1 === index % columns} />)}
       </React.Fragment>
     );
